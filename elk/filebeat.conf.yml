@@ -1,0 +1,11 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+        - "/home/vagrant/log/test.log"
+      fields:
+        type: syslog
+
+output: 
+  logstash:
+    hosts: ["somehosts"]
