@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  elasticsearch:
+    build: .
+    image: daocloud.io/zhengweikeng/elasticsearch
+    dockerfile: ./dockerfile/esDockerfile
+    container_name: elasticsearch
+    expose: 
+      - "9200"
+  
+  logstash:
+    build: .
+    image: daocloud.io/zhengweikeng/logstash
+    dockerfile: ./dockerfile/logstashDockerfile
+    container_name: logstash
+    ports: 
+      - "5043:5043"
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build: .
+    image: daocloud.io/zhengweikeng/kibana
+    dockerfile: ./dockerfile/kibanaDockerfile
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    depends_on:
+      - logstash
