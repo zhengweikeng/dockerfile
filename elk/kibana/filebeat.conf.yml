@@ -5,7 +5,11 @@ filebeat:
         - "/home/vagrant/log/test.log"
       fields:
         type: syslog
+      document_type: "bunyan"
 
 output: 
   logstash:
     hosts: ["192.168.33.10:5043"]
+
+shipper: 
+  name: ""

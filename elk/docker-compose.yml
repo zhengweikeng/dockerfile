@@ -13,7 +13,7 @@ services:
     build: .
     image: daocloud.io/zhengweikeng/logstash
     container_name: logstash
-    ports: 
+    ports:
       - "5043:5043"
     depends_on:
       - elasticsearch
@@ -22,7 +22,20 @@ services:
     build: .
     image: daocloud.io/zhengweikeng/kibana
     container_name: kibana
-    ports:
-      - "5601:5601"
+    expose:
+      - "5601"
     depends_on:
       - elasticsearch
+
+  nginx:
+    build: .
+    image: daocloud.io/library/nginx:latest
+    container_name: nginx
+    ports:
+      - "5601:5601"
+    volumes:
+      - "~/nginx/conf.d:/etc/nginx/conf.d"
+      - "~/nginx/db:/data/nginx/db"
+    depends_on:
+      - "kibana"
+      - "logstash"
